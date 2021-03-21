@@ -62,8 +62,8 @@ def setflags(line):
             keyword_parameters[paramname] = params.split('=')[1]
     
 if len(sys.argv) < 2:
-    print 'Python Abaqus input file framework'
-    print 'usage: python abq_inp_framework.py [folder]'
+    print ('Python Abaqus input file framework')
+    print ('usage: python abq_inp_framework.py [folder]')
     sys.exit()
 
 src_dir = sys.argv[1]
@@ -99,7 +99,8 @@ for (path, dirs, files) in os.walk(path):
                         # the variable 'line' is a string containing the current line we're processing.
                     elif flags['someflag']:
                         #another flag, do something else
+                        pass
                 #----------------------------Finite State Machine end ----------------------------
-                print line.rstrip()
+                print(line.rstrip())
 
 sys.stderr.write('total files processed: ' + str(totalfiles)+ '\n')

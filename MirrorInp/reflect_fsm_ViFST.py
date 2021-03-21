@@ -77,13 +77,13 @@ class quaternion:
         
     def show(self):
         for i in range(self.dimx):
-            print self.value[i]
-        print ' '
+            print (self.value[i])
+        print (' ')
         
     def __add__(self, other):
         # check if correct dimensions
         if self.dimx != other.dimx:
-            raise ValueError, "Quaternions must be of equal dimensions to add"
+            raise ValueError("Quaternions must be of equal dimensions to add")
         else:
             # add if correct dimensions
             res = quaternion()
@@ -94,7 +94,7 @@ class quaternion:
     def __sub__(self, other):
         # check if correct dimensions
         if self.dimx != other.dimx:
-            raise ValueError, "Quaternions must be of equal dimensions to subtract"
+            raise ValueError("Quaternions must be of equal dimensions to subtract")
         else:
             # subtract if correct dimensions
             res = quaternion()
@@ -105,7 +105,7 @@ class quaternion:
     def __mul__(self, other):
         # check if correct dimensions
         if self.dimx != other.dimx:
-            raise ValueError, "Can only multiply 2 quaternions together"
+            raise ValueError("Can only multiply 2 quaternions together")
         else:
             # quaternion multiplication
             res = quaternion()
@@ -224,8 +224,8 @@ def rearrange_el_nodes(line,sline):
     return line, cont_bool
     
 if len(sys.argv) < 2:
-    print 'Python Abaqus model reflecting script'
-    print 'usage: python reflect.py [folder]'
+    print ('Python Abaqus model reflecting script')
+    print ('usage: python reflect.py [folder]')
     sys.exit()
 
 src_dir = sys.argv[1]
@@ -335,7 +335,7 @@ for (path, dirs, files) in os.walk(path):
                         line = line.replace('LH', 'RH')
                 ############################################################################
                 #----------------------------Finite State Machine end ----------------------------
-                print line.rstrip()
+                print (line.rstrip())
   
 path = dst_dir #reset the path
                 
