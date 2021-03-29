@@ -74,9 +74,9 @@ def max_price_grp(df):
     :return:
     """
     # grouping by County and finding the max price
-    grp_county = df.groupby('County')['Price'].max().reset_index()
+    df = df.groupby('County')['Price'].max().reset_index()
 
-    return grp_county
+    return df
 
 max_price_per_county = max_price_grp(price_paid_data)
 print(max_price_per_county.head())
@@ -89,19 +89,20 @@ def max_price_quarter(df):
     :return:
     """
 
-    df=df.copy()
+    df = df.copy()
     # to work only with dates (day)
     df.DateOfTrasfer = pd.to_datetime(df.DateOfTrasfer)
     # defining a column containing quarters Q1, Q2, Q3, Q4
     df['quarter'] = pd.PeriodIndex(df.DateOfTrasfer, freq='Q').astype(str).str[-2:]
-    # grouping and calculating max value
-    df = df.groupby(['quarter', 'District', 'Postcode'])['Price'].max()
-    # grouping quarter and district, returing the top 5
-    df = df.groupby(level=[0,1]).head(5).reset_index()
-    # sorting the dataframe
-    df.sort_values(['quarter', 'District'], ascending=(True, False))
     # split the postcode by space and returns the first part of the postcode
     df['Postcode'] = df.Postcode.str.split(' ', 0, expand=True)
+    # grouping and calculating max value
+    df = df.groupby(['quarter', 'District', 'Postcode'])['Price'].apply(np.max)
+
+    # grouping quarter and district, returning the top 5
+    df = df.groupby(level=[0, 1]).head(5).reset_index()
+    # sorting the dataframe
+    df.sort_values(['quarter', 'Price'], ascending=(True, False))
 
     df.set_index('quarter', inplace=True)
 
