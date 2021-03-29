@@ -62,7 +62,7 @@ print(price_paid_data.head(10))
 print(price_paid_data.info())
 print(price_paid_data.isnull().sum())
 print(price_paid_data.isnull().sum() * 100 / len(price_paid_data))
-price_paid_data.drop(['SAON', 'Locality'], axis=1, inplace=True)
+price_paid_data.drop(['Tuid','Old/New', 'Duration','SAON', 'Locality', 'Record Status'], axis=1, inplace=True)
 price_paid_data = price_paid_data.dropna()
 print(price_paid_data.isnull().sum() * 100 / len(price_paid_data))
 
