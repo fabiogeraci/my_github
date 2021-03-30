@@ -93,13 +93,15 @@ def max_price_quarter(df):
     # to work only with dates (day)
     df.DateOfTrasfer = pd.to_datetime(df.DateOfTrasfer)
     # defining a column containing quarters Q1, Q2, Q3, Q4
-    df['quarter'] = pd.PeriodIndex(df.DateOfTrasfer, freq='Q').astype(str).str[-2:]
-    # split the postcode by space and returns the first part of the postcode
-    df['Postcode'] = df.Postcode.str.split(' ', 0, expand=True)
-    # grouping and calculating max value
-    df = df.groupby(['quarter', 'District', 'Postcode'])['Price'].apply(np.max)
+    df['quarter'] = pd.PeriodIndex(df.DateOfTrasfer, freq='Q').strftime('Q%q')
 
-    # grouping quarter and district, returning the top 5
+    # split the postcode by space and returns the first part of the postcode
+    df['Postcode'] = df['Postcode'].astype(str).apply(lambda Postcode: Postcode.split(' ')[0])
+
+    # grouping and calculating max value
+    df = df.groupby(['quarter', 'District', 'Postcode']).agg({'Price': max})
+
+    # grouping quarter and district, returing the top 5
     df = df.groupby(level=[0, 1]).head(5).reset_index()
     # sorting the dataframe
     df.sort_values(['quarter', 'Price'], ascending=(True, False))
